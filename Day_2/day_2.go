@@ -92,50 +92,41 @@ func invalidIdSumAlgorithmOne(currentSum, startId, endId int) int {
 	return currentSum
 }
 
-func invalidIdSumAlgorithmTwo(currentSum, startId, endId int) int {
+func isInvalidPartTwo(id int) bool {
+	s := strconv.Itoa(id)
+	n := len(s)
 
-	for id := startId; id <= endId; id++ {
-		stringId := strconv.Itoa(id)
+	for size := 1; size <= n/2; size++ {
 
-		//if all the numbers are the same
-		if idHasTheSameDigits(stringId) {
-			fmt.Printf("Value found between %d and %d, it's is %d\n", startId, endId, id)
-			currentSum += id
-		} else {
-			//if it's bigger then 4
-			if len(stringId) >= 4 {
-				//for the lenght divided by 2
-				for size := 2; size <= len(stringId)/2; size++ {
-					//if the size is divisible by i
-					if len(stringId)%size == 0 {
-						baseChar := stringId[0:size]
-						ok := true
-						for j := size; j < len(stringId); j += size {
-							if stringId[j:j+size] != baseChar {
-								ok = false
-								break
-							}
-						}
-						if ok {
-							fmt.Printf("Value found between %d and %d, it's is %d\n", startId, endId, id)
-							currentSum += id
-						}
-					}
-				}
+		if n%size != 0 {
+			continue
+		}
+
+		repeats := n / size
+		if repeats < 2 {
+			continue
+		}
+
+		block := s[:size]
+		ok := true
+		for i := size; i < n; i += size {
+			if s[i:i+size] != block {
+				ok = false
+				break
 			}
 		}
-	}
-
-	return currentSum
-}
-
-func idHasTheSameDigits(stringId string) bool {
-
-	for i := 1; i < len(stringId); i++ {
-		if stringId[i] != stringId[0] {
-			return false
+		if ok {
+			return true
 		}
 	}
+	return false
+}
 
-	return true
+func invalidIdSumAlgorithmTwo(currentSum, startId, endId int) int {
+	for id := startId; id <= endId; id++ {
+		if isInvalidPartTwo(id) {
+			currentSum += id
+		}
+	}
+	return currentSum
 }
