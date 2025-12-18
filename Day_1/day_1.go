@@ -36,7 +36,7 @@ func runChristmasKey(filename string, part int) error {
 
 	file, err := os.Open(filename)
 	if err != nil {
-		return fmt.Errorf("failed to open %s: %w", filename, err)
+		return fmt.Errorf("failed to open %s: %v", filename, err)
 	}
 	defer file.Close()
 
@@ -67,7 +67,7 @@ func runChristmasKey(filename string, part int) error {
 	}
 
 	if err := scanner.Err(); err != nil {
-		return fmt.Errorf("error reading file: %w", err)
+		return fmt.Errorf("error reading file: %v", err)
 	}
 
 	fmt.Println("The secret is:", secret)
