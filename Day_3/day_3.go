@@ -114,34 +114,44 @@ func stepPart2(batteriesCode int, battery string) int {
 		fmt.Printf("stepPart2: skipping battery %q (len=%d < 12)\n", battery, len(battery))
 		return batteriesCode
 	}
-
-	// do a cicle to find the biggest 12 digits, find the first biggest number and then do the same starting from the position of the last big number
+	// find the biggest 12 digits
 	var finalValue [12]byte
 	finalValue[0] = battery[0]
 	missing, previousPosition := 11, 0
 
 	for turn := 0; turn < 12; turn++ {
-
-		// create a exception when the lenght left is equal to the missing numbers
+		// when the length left equals the missing digits
 		if len(battery)-previousPosition+1 == missing {
-			for i := 0; i <= missing; i++ {
-				finalValue[turn] = battery[previousPosition+i]
-				previousPosition++
-			}
-		}
+			finalValue[turn] = battery[previousPosition+1]
+			previousPosition++
+		} else {
 
-		finalValue[turn] = battery[previousPosition+1]
-		for i := previousPosition + 1; i < len(battery)-missing; i++ {
-
-			if battery[i] > finalValue[turn] {
-				finalValue[turn], previousPosition = battery[i], i
+			// start candidate as the next digit
+			if turn != 0 {
+				finalValue[turn] = battery[previousPosition]
 			}
+			limit := len(battery) - missing
+
+			for i := previousPosition + 1; i < limit; i++ {
+
+				if battery[i] > finalValue[turn] {
+					finalValue[turn], previousPosition = battery[i], i
+				}
+			}
+			previousPosition++
 		}
 		missing--
 	}
 
 	finalValueString := string(finalValue[:])
-	finalValueInt, _ := strconv.Atoi(finalValueString)
+	finalValueInt, err := strconv.Atoi(finalValueString)
+	if err != nil {
+		fmt.Printf("stepPart2: ERROR converting %q to int: %v\n", finalValueString, err)
+		return batteriesCode
+	}
+
+	fmt.Println("Value found:", finalValueString)
 	batteriesCode += finalValueInt
+
 	return batteriesCode
 }
