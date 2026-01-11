@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"strings"
 )
 
 func main() {
@@ -21,14 +20,14 @@ func main() {
 		log.Fatalf("invalid part: %d (must be 1 or 2)", part)
 	}
 
-	if err := runRollsCode("Input_test.txt", part); err != nil {
+	if err := runRollsCode("Input.txt", part); err != nil {
 		log.Fatalf("error: %v", err)
 	}
 }
 
 func runRollsCode(filename string, part int) error {
 
-	rollsCode := 0
+	totalAmmount := 0
 
 	file, err := os.Open(filename)
 	if err != nil {
@@ -36,36 +35,270 @@ func runRollsCode(filename string, part int) error {
 	}
 	defer file.Close()
 
+	var stock [][]byte
+
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		batterie := strings.TrimSpace(scanner.Text())
-		if batterie == "" {
-			continue // skip empty lines
-		}
-		if len(batterie) < 2 {
-			return fmt.Errorf("invalid line: %q", batterie)
+
+		line := scanner.Text()
+
+		if len(line) == 0 {
+			continue
 		}
 
-		switch part {
-		case 1:
-			rollsCode = stepPart1(rollsCode, batterie)
-		case 2:
-			rollsCode = stepPart2(rollsCode, batterie)
+		stock = append(stock, []byte(line))
+
+		if err := scanner.Err(); err != nil {
+			log.Fatalf("error reading file: %v", err)
 		}
 	}
 
-	if err := scanner.Err(); err != nil {
-		return fmt.Errorf("error reading file: %v", err)
+	switch part {
+	case 1:
+		totalAmmount = stepPart1(stock)
+	case 2:
+		totalAmmount = stepPart2(stock)
 	}
 
-	fmt.Println("The total amount of rolls that can be accessed is:", rollsCode)
+	fmt.Println("The total amount of rolls that can be accessed is:", totalAmmount)
 	return nil
 }
 
-func stepPart1(rollsCode int, roll string) int {
-	return 1
+func stepPart1(stock [][]byte) int {
+
+	finalAmmount := 0
+	numberOfRows := len(stock)
+	numberOfCols := len(stock[0])
+
+	for r := 0; r < numberOfRows; r++ {
+		for c := 0; c < numberOfCols; c++ {
+
+			if stock[r][c] != '@' {
+				continue
+			}
+
+			//if its the first row
+			switch r {
+			case 0:
+				if firstRowTotal(r, c, stock, numberOfCols) < 4 {
+					fmt.Println("1New value found at: row ", r, " column", c)
+					finalAmmount++
+				}
+			case numberOfRows - 1:
+				if lastRowTotal(r, c, stock, numberOfCols) < 4 {
+					fmt.Println("2New value found at: row ", r, " column", c)
+					finalAmmount++
+				}
+			default:
+				if anyOtherRowTotal(r, c, stock, numberOfCols) < 4 {
+					fmt.Println("3New value found at: row ", r, " column", c)
+					finalAmmount++
+				}
+			}
+		}
+	}
+	return finalAmmount
 }
 
-func stepPart2(rollsCode int, roll string) int {
+func firstRowTotal(row int, column int, stock [][]byte, numberOfCols int) int {
+
+	paperRolls := 0
+
+	//if it's first column
+	switch column {
+	case 0:
+
+		if stock[row][column+1] == '@' {
+			paperRolls++
+		}
+
+		if stock[row+1][column+1] == '@' {
+			paperRolls++
+		}
+
+		if stock[row+1][column] == '@' {
+			paperRolls++
+		}
+	case numberOfCols - 1:
+
+		if stock[row][column-1] == '@' {
+			paperRolls++
+		}
+
+		if stock[row+1][column-1] == '@' {
+			paperRolls++
+		}
+
+		if stock[row+1][column] == '@' {
+			paperRolls++
+		}
+	default:
+		if stock[row][column-1] == '@' {
+			paperRolls++
+		}
+
+		if stock[row+1][column-1] == '@' {
+			paperRolls++
+		}
+
+		if stock[row+1][column] == '@' {
+			paperRolls++
+		}
+
+		if stock[row][column+1] == '@' {
+			paperRolls++
+		}
+
+		if stock[row+1][column+1] == '@' {
+			paperRolls++
+		}
+	}
+
+	return paperRolls
+}
+
+func lastRowTotal(row int, column int, stock [][]byte, numberOfCols int) int {
+
+	paperRolls := 0
+
+	//if it's first column
+	switch column {
+	case 0:
+
+		if stock[row-1][column] == '@' {
+			paperRolls++
+		}
+
+		if stock[row-1][column+1] == '@' {
+			paperRolls++
+		}
+
+		if stock[row][column+1] == '@' {
+			paperRolls++
+		}
+	case numberOfCols - 1:
+
+		if stock[row][column-1] == '@' {
+			paperRolls++
+		}
+
+		if stock[row-1][column-1] == '@' {
+			paperRolls++
+		}
+
+		if stock[row-1][column] == '@' {
+			paperRolls++
+		}
+	default:
+		if stock[row][column-1] == '@' {
+			paperRolls++
+		}
+
+		if stock[row-1][column-1] == '@' {
+			paperRolls++
+		}
+
+		if stock[row-1][column] == '@' {
+			paperRolls++
+		}
+
+		if stock[row-1][column+1] == '@' {
+			paperRolls++
+		}
+
+		if stock[row][column+1] == '@' {
+			paperRolls++
+		}
+	}
+
+	return paperRolls
+}
+
+func anyOtherRowTotal(row int, column int, stock [][]byte, numberOfCols int) int {
+
+	paperRolls := 0
+
+	//if it's first column
+	switch column {
+	case 0:
+
+		if stock[row-1][column] == '@' {
+			paperRolls++
+		}
+
+		if stock[row-1][column+1] == '@' {
+			paperRolls++
+		}
+
+		if stock[row][column+1] == '@' {
+			paperRolls++
+		}
+
+		if stock[row+1][column+1] == '@' {
+			paperRolls++
+		}
+
+		if stock[row+1][column] == '@' {
+			paperRolls++
+		}
+	case numberOfCols - 1:
+
+		if stock[row-1][column] == '@' {
+			paperRolls++
+		}
+
+		if stock[row-1][column-1] == '@' {
+			paperRolls++
+		}
+
+		if stock[row][column-1] == '@' {
+			paperRolls++
+		}
+
+		if stock[row+1][column-1] == '@' {
+			paperRolls++
+		}
+
+		if stock[row+1][column] == '@' {
+			paperRolls++
+		}
+	default:
+		if stock[row-1][column-1] == '@' {
+			paperRolls++
+		}
+
+		if stock[row-1][column] == '@' {
+			paperRolls++
+		}
+
+		if stock[row-1][column+1] == '@' {
+			paperRolls++
+		}
+
+		if stock[row][column+1] == '@' {
+			paperRolls++
+		}
+
+		if stock[row+1][column+1] == '@' {
+			paperRolls++
+		}
+
+		if stock[row+1][column] == '@' {
+			paperRolls++
+		}
+
+		if stock[row+1][column-1] == '@' {
+			paperRolls++
+		}
+
+		if stock[row][column-1] == '@' {
+			paperRolls++
+		}
+	}
+
+	return paperRolls
+}
+
+func stepPart2(stock [][]byte) int {
 	return 2
 }
