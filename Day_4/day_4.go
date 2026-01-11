@@ -108,48 +108,48 @@ func firstRowTotal(row int, column int, stock [][]byte, numberOfCols int) int {
 	switch column {
 	case 0:
 
-		if stock[row][column+1] == '@' {
+		if stock[row][column+1] == '@' || stock[row][column+1] == 'x' {
 			paperRolls++
 		}
 
-		if stock[row+1][column+1] == '@' {
+		if stock[row+1][column+1] == '@' || stock[row+1][column+1] == 'x' {
 			paperRolls++
 		}
 
-		if stock[row+1][column] == '@' {
+		if stock[row+1][column] == '@' || stock[row+1][column] == 'x' {
 			paperRolls++
 		}
 	case numberOfCols - 1:
 
-		if stock[row][column-1] == '@' {
+		if stock[row][column-1] == '@' || stock[row][column-1] == 'x' {
 			paperRolls++
 		}
 
-		if stock[row+1][column-1] == '@' {
+		if stock[row+1][column-1] == '@' || stock[row][column-1] == 'x' {
 			paperRolls++
 		}
 
-		if stock[row+1][column] == '@' {
+		if stock[row+1][column] == '@' || stock[row+1][column] == 'x' {
 			paperRolls++
 		}
 	default:
-		if stock[row][column-1] == '@' {
+		if stock[row][column-1] == '@' || stock[row][column-1] == 'x' {
 			paperRolls++
 		}
 
-		if stock[row+1][column-1] == '@' {
+		if stock[row+1][column-1] == '@' || stock[row+1][column-1] == 'x' {
 			paperRolls++
 		}
 
-		if stock[row+1][column] == '@' {
+		if stock[row+1][column] == '@' || stock[row+1][column] == 'x' {
 			paperRolls++
 		}
 
-		if stock[row][column+1] == '@' {
+		if stock[row][column+1] == '@' || stock[row][column+1] == 'x' {
 			paperRolls++
 		}
 
-		if stock[row+1][column+1] == '@' {
+		if stock[row+1][column+1] == '@' || stock[row+1][column+1] == 'x' {
 			paperRolls++
 		}
 	}
@@ -165,48 +165,48 @@ func lastRowTotal(row int, column int, stock [][]byte, numberOfCols int) int {
 	switch column {
 	case 0:
 
-		if stock[row-1][column] == '@' {
+		if stock[row-1][column] == '@' || stock[row-1][column] == 'x' {
 			paperRolls++
 		}
 
-		if stock[row-1][column+1] == '@' {
+		if stock[row-1][column+1] == '@' || stock[row-1][column+1] == 'x' {
 			paperRolls++
 		}
 
-		if stock[row][column+1] == '@' {
+		if stock[row][column+1] == '@' || stock[row][column+1] == 'x' {
 			paperRolls++
 		}
 	case numberOfCols - 1:
 
-		if stock[row][column-1] == '@' {
+		if stock[row][column-1] == '@' || stock[row][column-1] == 'x' {
 			paperRolls++
 		}
 
-		if stock[row-1][column-1] == '@' {
+		if stock[row-1][column-1] == '@' || stock[row-1][column-1] == 'x' {
 			paperRolls++
 		}
 
-		if stock[row-1][column] == '@' {
+		if stock[row-1][column] == '@' || stock[row-1][column] == 'x' {
 			paperRolls++
 		}
 	default:
-		if stock[row][column-1] == '@' {
+		if stock[row][column-1] == '@' || stock[row][column-1] == 'x' {
 			paperRolls++
 		}
 
-		if stock[row-1][column-1] == '@' {
+		if stock[row-1][column-1] == '@' || stock[row-1][column-1] == 'x' {
 			paperRolls++
 		}
 
-		if stock[row-1][column] == '@' {
+		if stock[row-1][column] == '@' || stock[row-1][column] == 'x' {
 			paperRolls++
 		}
 
-		if stock[row-1][column+1] == '@' {
+		if stock[row-1][column+1] == '@' || stock[row-1][column+1] == 'x' {
 			paperRolls++
 		}
 
-		if stock[row][column+1] == '@' {
+		if stock[row][column+1] == '@' || stock[row][column+1] == 'x' {
 			paperRolls++
 		}
 	}
@@ -222,76 +222,76 @@ func anyOtherRowTotal(row int, column int, stock [][]byte, numberOfCols int) int
 	switch column {
 	case 0:
 
-		if stock[row-1][column] == '@' {
+		if stock[row-1][column] == '@' || stock[row-1][column] == 'x' {
 			paperRolls++
 		}
 
-		if stock[row-1][column+1] == '@' {
+		if stock[row-1][column+1] == '@' || stock[row-1][column+1] == 'x' {
 			paperRolls++
 		}
 
-		if stock[row][column+1] == '@' {
+		if stock[row][column+1] == '@' || stock[row][column+1] == 'x' {
 			paperRolls++
 		}
 
-		if stock[row+1][column+1] == '@' {
+		if stock[row+1][column+1] == '@' || stock[row+1][column+1] == 'x' {
 			paperRolls++
 		}
 
-		if stock[row+1][column] == '@' {
+		if stock[row+1][column] == '@' || stock[row+1][column] == 'x' {
 			paperRolls++
 		}
 	case numberOfCols - 1:
 
-		if stock[row-1][column] == '@' {
+		if stock[row-1][column] == '@' || stock[row-1][column] == 'x' {
 			paperRolls++
 		}
 
-		if stock[row-1][column-1] == '@' {
+		if stock[row-1][column-1] == '@' || stock[row-1][column-1] == 'x' {
 			paperRolls++
 		}
 
-		if stock[row][column-1] == '@' {
+		if stock[row][column-1] == '@' || stock[row][column-1] == 'x' {
 			paperRolls++
 		}
 
-		if stock[row+1][column-1] == '@' {
+		if stock[row+1][column-1] == '@' || stock[row+1][column-1] == 'x' {
 			paperRolls++
 		}
 
-		if stock[row+1][column] == '@' {
+		if stock[row+1][column] == '@' || stock[row+1][column] == 'x' {
 			paperRolls++
 		}
 	default:
-		if stock[row-1][column-1] == '@' {
+		if stock[row-1][column-1] == '@' || stock[row-1][column-1] == 'x' {
 			paperRolls++
 		}
 
-		if stock[row-1][column] == '@' {
+		if stock[row-1][column] == '@' || stock[row-1][column] == 'x' {
 			paperRolls++
 		}
 
-		if stock[row-1][column+1] == '@' {
+		if stock[row-1][column+1] == '@' || stock[row-1][column+1] == 'x' {
 			paperRolls++
 		}
 
-		if stock[row][column+1] == '@' {
+		if stock[row][column+1] == '@' || stock[row][column+1] == 'x' {
 			paperRolls++
 		}
 
-		if stock[row+1][column+1] == '@' {
+		if stock[row+1][column+1] == '@' || stock[row+1][column+1] == 'x' {
 			paperRolls++
 		}
 
-		if stock[row+1][column] == '@' {
+		if stock[row+1][column] == '@' || stock[row+1][column] == 'x' {
 			paperRolls++
 		}
 
-		if stock[row+1][column-1] == '@' {
+		if stock[row+1][column-1] == '@' || stock[row+1][column-1] == 'x' {
 			paperRolls++
 		}
 
-		if stock[row][column-1] == '@' {
+		if stock[row][column-1] == '@' || stock[row][column-1] == 'x' {
 			paperRolls++
 		}
 	}
@@ -300,5 +300,65 @@ func anyOtherRowTotal(row int, column int, stock [][]byte, numberOfCols int) int
 }
 
 func stepPart2(stock [][]byte) int {
-	return 2
+
+	finalAmmount, rollsRemoved := 0, 1
+	numberOfRows := len(stock)
+	numberOfCols := len(stock[0])
+
+	for {
+
+		if rollsRemoved == 0 {
+			break
+		}
+
+		fmt.Println("Starting iteration")
+		rollsRemoved = 0
+
+		for r := 0; r < numberOfRows; r++ {
+			for c := 0; c < numberOfCols; c++ {
+
+				if stock[r][c] != '@' {
+					continue
+				}
+
+				//if its the first row
+				switch r {
+				case 0:
+					if firstRowTotal(r, c, stock, numberOfCols) < 4 {
+						stock[r][c] = 'x'
+						rollsRemoved++
+					}
+				case numberOfRows - 1:
+					if lastRowTotal(r, c, stock, numberOfCols) < 4 {
+						stock[r][c] = 'x'
+						rollsRemoved++
+					}
+				default:
+					if anyOtherRowTotal(r, c, stock, numberOfCols) < 4 {
+						stock[r][c] = 'x'
+						rollsRemoved++
+
+					}
+				}
+			}
+		}
+
+		fmt.Println("Rolls removed this iteration:", rollsRemoved)
+		finalAmmount += rollsRemoved
+		convertMarkedToEmpty(stock, numberOfRows, numberOfCols)
+	}
+
+	return finalAmmount
+
+}
+
+func convertMarkedToEmpty(stock [][]byte, numberOfRows int, numberOfCols int) {
+
+	for r := 0; r < numberOfRows; r++ {
+		for c := 0; c < numberOfCols; c++ {
+			if stock[r][c] == 'x' {
+				stock[r][c] = '.'
+			}
+		}
+	}
 }
